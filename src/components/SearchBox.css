@@ -1,0 +1,19 @@
+/*
+    Name:
+    Tony Matthews
+
+    Course:
+    CMP SCI 4010-001
+
+    Date:
+    10/16/24
+
+    Description:
+    This file contains the styling for the SearchBox component.
+    It is just used to center it horizontally on the page.
+*/
+
+.search-box {
+    display: flex;
+    justify-content: center;
+}
