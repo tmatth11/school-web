@@ -1,7 +1,22 @@
+/*
+    Name:
+    Tony Matthews
+
+    Course:
+    CMP SCI 4010-001
+
+    Date:
+    11/12/24
+
+    Description:
+    This is the CSS file for the StudentTable component.
+*/
+
 .bg-container {
     min-height: 100vh;
     background-color: whitesmoke;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -24,4 +39,3 @@
     background-color: #0f9ed5;
     color: white;
 }
-

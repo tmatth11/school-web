@@ -23,16 +23,29 @@ import { API_URL } from "../api/studentAPI";
 import AddStudent from "./AddStudent";
 import EditStudent from "./EditStudent";
 import SearchBox from "./SearchBox";
+import { Button } from '@mui/material';
 import "./StudentTable.css";
 
-function StudentTable() {
+function StudentTable({ logOut }) {
     // State variables
     const [students, setStudents] = useState([]); // Array of student objects
     const [filteredStudents, setFilteredStudents] = useState([]); // Array of filtered student objects
 
+    // Get the Axios configuration
+    const getAxiosConfig = () => {
+        const token = sessionStorage.getItem("jwt");
+        console.log(token);
+        return {
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json',
+            },
+        };
+    };
+
     // Fetch students from the API
     const fetchStudents = async () => {
-        const response = await axios.get(`${API_URL}`); // Returns Promise
+        const response = await axios.get(`${API_URL}`, getAxiosConfig()); // Returns Promise to get students from API
 
         console.log(response.data); // Log the response data
         setStudents(response.data); // Set the students state variable
@@ -41,7 +54,7 @@ function StudentTable() {
 
     // Delete a student from the API
     const deleteStudent = async (studentId) => {
-        await axios.delete(`${API_URL}/${studentId}`); // Returns Promise to delete student from API
+        await axios.delete(`${API_URL}/${studentId}`, getAxiosConfig()); // Returns Promise to delete student from API
         fetchStudents(); // Fetch students again to update the table
     };
 
@@ -52,7 +65,7 @@ function StudentTable() {
     // Update the filtered students when the students state variable changes (FORGOT TO DO IN HW4)
     useEffect(() => {
         setFilteredStudents(students);
-      }, [students]);
+    }, [students]);
 
     // Event handlers
 
@@ -64,9 +77,9 @@ function StudentTable() {
     // Handle the search box input
     const handleSearch = (searchTerm) => {
         const lowercasedTerm = searchTerm.toLowerCase(); // Convert the search term to lowercase
-        
+
         // Filter the students based on the search term
-        const filtered = students.filter(student => 
+        const filtered = students.filter(student =>
             student.studentId.toString().includes(lowercasedTerm) ||
             student.name.toLowerCase().includes(lowercasedTerm) ||
             student.major.toLowerCase().includes(lowercasedTerm)
@@ -98,7 +111,7 @@ function StudentTable() {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) =>
-                <EditStudent studentData={params.row} setStudents={setStudents} />
+                <EditStudent studentData={params.row} setStudents={setStudents} getAxiosConfig={getAxiosConfig} />
         },
         // Delete column
         {
@@ -125,11 +138,22 @@ function StudentTable() {
         // Student table container
         <div className="bg-container">
             <div className="tbl-container">
+                <Button
+                    id="logout-button"
+                    onClick={logOut}
+                    sx={{
+                        alignSelf: 'flex-end',
+                        width: 'auto',
+                        marginBottom: '10px'
+                    }}
+                >
+                    Log out
+                </Button>
                 {/* Search box */}
                 <SearchBox onSearch={handleSearch} />
                 <div className="btn-container">
                     {/* Add student button */}
-                    <AddStudent setStudents={setStudents} />
+                    <AddStudent setStudents={setStudents} getAxiosConfig={getAxiosConfig} />
                 </div>
                 {/* DataGrid component with student details */}
                 <DataGrid data-testid="student-table"

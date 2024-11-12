@@ -1,3 +1,17 @@
+/*
+    Name:
+    Tony Matthews
+
+    Course:
+    CMP SCI 4010-001
+
+    Date:
+    11/12/24
+
+    Description:
+    This file contains the EditStudent component which allows users to edit a student in the table.
+*/
+
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,7 +24,7 @@ import { useState } from 'react';
 import { API_URL } from "../api/studentAPI";
 import EditStudentDialogContent from './EditStudentDialogContent';
 
-function EditStudent({ studentData, setStudents }) {
+function EditStudent({ studentData, setStudents, getAxiosConfig }) {
 
     const [open, setOpen] = useState(false); // initially hide edit diaglog window
     const [student, setStudent] = useState({
@@ -34,15 +48,17 @@ function EditStudent({ studentData, setStudents }) {
         setOpen(false); // close edit dialog window
     };
 
+    // Modified to handle JWT token
     const fetchStudents = async () => {
-        const response = await axios.get(`${API_URL}`); // returns Promise
+        const response = await axios.get(`${API_URL}`, getAxiosConfig()); // returns Promise
 
         console.log(response.data);
         setStudents(response.data);
     };
 
+    // Also modified to handle JWT token
     const editStudent = async (studentId, student) => {
-        await axios.put(`${API_URL}/${studentId}`, student);
+        await axios.put(`${API_URL}/${studentId}`, student, getAxiosConfig());
         fetchStudents();
     };
 
