@@ -49,6 +49,11 @@ function StudentTable() {
         fetchStudents(); // Fetch students when the component mounts
     }, []);
 
+    // Update the filtered students when the students state variable changes (FORGOT TO DO IN HW4)
+    useEffect(() => {
+        setFilteredStudents(students);
+      }, [students]);
+
     // Event handlers
 
     // Handle the delete button click

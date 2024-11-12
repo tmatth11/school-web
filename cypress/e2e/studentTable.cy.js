@@ -13,7 +13,7 @@ describe('student table', () => {
 
   });
 
-  it.only('should display student table', () => {
+  it('should display student table', () => {
     cy.visit('http://localhost:3000');
 
     cy.get('[data-testid="student-table"]').should('exist');
@@ -155,7 +155,7 @@ describe('student table', () => {
     });
   });
 
-  it('should delete an existing row', () => {
+  it.only('should delete an existing row', () => {
     cy.visit('http://localhost:3000');
 
     cy.intercept(
