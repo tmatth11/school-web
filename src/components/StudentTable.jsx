@@ -52,7 +52,7 @@ function StudentTable() {
     // Update the filtered students when the students state variable changes (FORGOT TO DO IN HW4)
     useEffect(() => {
         setFilteredStudents(students);
-      }, [students]);
+    }, [students]);
 
     // Event handlers
 
@@ -64,9 +64,9 @@ function StudentTable() {
     // Handle the search box input
     const handleSearch = (searchTerm) => {
         const lowercasedTerm = searchTerm.toLowerCase(); // Convert the search term to lowercase
-        
+
         // Filter the students based on the search term
-        const filtered = students.filter(student => 
+        const filtered = students.filter(student =>
             student.studentId.toString().includes(lowercasedTerm) ||
             student.name.toLowerCase().includes(lowercasedTerm) ||
             student.major.toLowerCase().includes(lowercasedTerm)
@@ -112,8 +112,13 @@ function StudentTable() {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
-                <Tooltip data-testid={`delete-button-row-${params.row.studentId}`} title="Delete Student">
-                    <IconButton aria-label="delete" size="small" onClick={() => handleClickDelete(params.row.studentId)}>
+                <Tooltip title="Delete Student">
+                    <IconButton
+                        data-testid={`delete-button-row-${params.row.studentId}`}
+                        aria-label="delete"
+                        size="small"
+                        onClick={() => handleClickDelete(params.row.studentId)}
+                    >
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
