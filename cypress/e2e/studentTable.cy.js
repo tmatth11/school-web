@@ -155,7 +155,7 @@ describe('student table', () => {
     });
   });
 
-  it.only('should delete an existing row', () => {
+  it('should delete an existing row', () => {
     cy.visit('http://localhost:3000');
 
     cy.intercept(
