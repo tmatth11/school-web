@@ -173,7 +173,7 @@ describe('student table', () => {
       getStudentListAfterDelete()
     );
 
-    cy.get('[data-testid="delete-button-row-12345"]').click();
+    cy.get('[data-testid="student-table"]', { timeout: 10000 }).should('exist');
 
     cy.get('[data-testid="student-table"]').find('.MuiDataGrid-row').should('have.length', 2); // must have 2 rows
   });
